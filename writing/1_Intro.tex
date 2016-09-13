@@ -1,0 +1,43 @@
+\section*{Introduction}
+\noindent Speciation and ecological diversification lead to an increase in the number of species in a clade until opportunities for establishment of further species with sufficiently dissimilar specializations are exhausted. 
+In the classic examples of such evolutionary radiations, including the Galapagos finches \citep{Grant1999}, the Hawaiian honeycreepers \citep{Freed1987, Futuyama1998, Lovette2002} and the East African cichlid fishes \citep{Verheyen2003, Seehausen2006, Day2008}, radiation has occurred within a relatively small area, and the focus of the research has been in the evolution of divergent morphological traits of species occupying distinct ecological niches. 
+Other radiations have taken place in systems of discrete areas, such as islands and caves, which have provided an opportunity to ask questions about the similarity of independent radiations within separate areas \citep{Mahler2013}. 
+In such systems, but also within large continuous areas, most species have geographical ranges that are smaller than the total area in question. 
+A new species may evolve within a small area, after which it may expand its geographical range, while the global extinction of a species is likely to be preceded by a shrinkage of its range. Range dynamics are occasionally fast, especially when a species colonizes a new region without close competitors and predators (for an informative example on Malagasy dung beetles see \citet{Hanski2008}), but perhaps more frequently ranges expand and shrink slowly, often because interspecific interactions constrain the spatial spreading of species \citep{Waters2013}. 
+In this latter case, speciation and extinction rates on the one hand, and the rate of range dynamics on the other, may occur at roughly the same time scale, raising questions about the role of spatial dynamics in evolutionary radiations, and indeed questions about interactions between speciation-extinction dynamics and the dynamics of geographic ranges. 
+This is an example of eco-evolutionary dynamics during a very long period of time. 
+
+A wealth of methods and models have been developed to characterize speciation and extinction rates and the rates at which particular traits change \citep{FitzJohn2012}, but only recently have researchers begun to examine possible coupling between speciation-extinction dynamics and the range dynamics of the constituent species during radiations \citep{Goldberg2011, Stadler2013}. 
+The standard approach is to fit a predefined Markov model of macroevolution to an empirical data set using a likelihood-based approach. 
+For instance, the Dispersal-Extinction-Cladogenesis (DEC) \citep{Ree2008} model has been constructed to infer dispersal and extinction rates using the maximum likelihood approach.
+This model takes into account the spatial configuration of species’ ranges but does not estimate the tempo of speciation. 
+The DEC model has been a helpful tool in estimating ancestral ranges \citep{Clark2008, Ramirez2010, Buerki2012}. 
+
+To allow extinction and speciation events to depend on species’ traits, \citep{Maddison2007} developed the Binary-State Speciation Extinction (BiSSE) model. 
+However, the BiSSE model is of limited use while considering geographic range characters as traits, because it constraints each lineage to possess only one character. 
+When there are only two geographical regions, the BiSSE model has been used to detect asymmetry in speciation, extinction and colonization rates \citep{Valente2010, Anacker2011, Lancaster2013}. 
+
+Recently, \citet{Goldberg2011} proposed the Geographic-State Speciation-Extinction (GeoSSE) model, which considers the geographic range as a species trait and incorporates explicit spatial dynamics coupled with the diversification process. 
+The GeoSSE model captures the facts that species’ ranges may influence speciation and extinction rates, and vice versa, via allopatric speciation and regional extinction of widespread lineages. 
+To date, the GeoSSE is perhaps the most flexible model of macroevolution that incorporates range dynamics, and it has been used for a better understanding of patterns of diversification and species’ geographic distributions \citep{Buerki2012, Bloom2013, Buerki2013, Jansson2013, Rolland2014}. 
+Like BiSSE, one of the major limitations of the GeoSSE is that it only permits comparative estimates of two regions.
+
+Here, we extend the GeoSSE model \citep{Goldberg2011} to allow for multiple regions and hence a more elaborate description of range dynamics. 
+In addition, we implement diversity (species number) dependence in the speciation or extinction rate. 
+This last assumption is new since previous models assume either constant rates of speciation, extinction and dispersal \citep{Stadler2013} or diversity-dependent rates but without range dynamics \citep{Rabosky2008, Etienne2012}. 
+Instead of using the likelihood-based approach, we opt for Approximate Bayesian Computation (ABC), which allows for more flexible model assumptions and avoids the computationally intensive method of solving the likelihood function \citep{Toni2009, Beaumont2010, Sunnaker2013}. 
+We aim to estimate the parameters of two modes of speciation, between-region and within-region (allopatric) speciation, as well as extinction, regional colonization, and the initial range of the last common ancestor.
+
+We apply the model to an evolutionary radiation of dung beetles in Madagascar. Madagascar has a unique biota \citep{Myers2000} with an exceptionally high level of endemicity: 100\% in Amphibians and terrestrial mammals, 92\% in reptiles, 90\% in plants, 44\% in birds \citep{Goodman2003} – and 96\% in dung beetles \citep{Miraldo2011}. 
+The obvious cause of high endemicity even at the family level \citep{Vences2009} is the ancient isolation of Madagascar, which became separated from the African continent around 135 million years ago and from the Indian plate around 90 million years ago \citep{deWit2003}. 
+In the case of dung beetles, beta diversity (spatial turnover in the species composition) is significantly higher in Madagascar than in other tropical regions \citep{Viljanen2010}, indicating high frequency of species with small geographical ranges. 
+The mechanisms that have been suggested to be responsible of microendemism include ecogeographic constraints, isolation of taxa in rainforest refugia during climatically dry periods, riverine barriers to dispersal, and montane refugia \citep{Vences2009}. 
+Undoubtedly, the large size of Madagascar ($587 \,000 \mbox{ km}^2$), the extensive mountain range from North to South, and the diversity of dissimilar biomes have all played a role in the evolution of the Malagasy biota \citep{Wilme2006, Yoder2006, Vences2009}. 
+There are around 300 extant species, which appear to originate from eight independent colonizations \citep{Wirta2010, Miraldo2011}. 
+In this paper, we focus on the most recent and most successful (in terms of net speciation rate) radiation, consisting of the genera \textit{Nanos} and \textit{Apotolamprus} with 74 known species \citep{Miraldo2011, Miraldo2014}.
+
+We start by describing the mathematical model and the lineage of Malagasy dung beetles to which we apply it. 
+Next, we describe the statistical model, with details of the ABC implementation. We describe how the model is simulated and validated using data with comparable structure to the empirical data. We could not reliably estimate the full model with region-specific parameters of both speciation and extinction, because of parameter correlations, but we obtained good estimates for the region-specific ratios of speciation to extinction. 
+Assuming equal constant extinction (respectively speciation) rate in each region yielded informative posterior distributions for the region-specific speciation (respectively extinction) and colonization parameters. 
+In the empirical data, the estimated within-region speciation rates and between-region colonization rate are of similar magnitude.  
+Based on the evaluation of all the models, we conclude that the most significant difference between the regions is exceptionally low extinction rate in northern Madagascar, where the current species richness is highest. 

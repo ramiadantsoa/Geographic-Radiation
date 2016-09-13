@@ -1,0 +1,96 @@
+\section*{Discussion}
+\noindent Models used for phylogenetic analyses are often compromised by the ability of researchers to solve them, which favors relatively simple models. 
+Although general understanding of basic processes may be obtained with simple models (e.g. the Yule model \citep{Yule1924} or birth-death process applied to phylogeny), biologists remain keen to consider models with more complex assumptions. 
+Here, ABC can be helpful in striking a balance between model complexity and analytical or computational tractability. 
+Instead of solving the likelihood function as in the SSE-models \citep{Maddison2007, Goldberg2011, FitzJohn2012}, the ABC approach allows us to construct models based on biologically well-justified assumptions. 
+The flexibility of ABC is obtained by targeting an approximate version of the posterior distribution, instead of the exact one. 
+
+A crucial component in controlling the degree of approximation in ABC algorithms is the choice of the summary statistics that project the data to a lower dimensional space without losing too much information about the parameters of interest. 
+While there exists a range of methods for reducing the dimensionality of candidate statistics \citep{Blum2013}, the performance of these statistics may still be limited, because the methods seek for simple global relationships between the summary statistics and parameters. 
+Therefore, choosing the summary statistics based on careful inspection of the model structure and observed data, as we have done here, is important. 
+Adaptive ABC algorithms such as the SMC-ABC that we have used allow efficient exploration of the parameter space. 
+These algorithms require little prior information on plausible parameter values, as they automatically detect regions of high posterior density. 
+This makes them suitable for models with a large number of parameters, where rejection sampling-based techniques suffer from the curse of dimensionality. 
+However, because they target posterior distribution associated with one particular data set, validating the inference procedure poses a considerable challenge and requires substantial computational effort. 
+This is in contrast with the rejection sampling-based algorithms, where the same simulated parameters and data sets can be used to analyze multiple test data sets. 
+
+The approach we use here differs from the previous SSE-models because we do not estimate absolute but relative rates. 
+Hence, each posterior distribution should only be compared with the others. 
+Although this is a setback in the model, we note that the absolute rate becomes less important in diversity-dependent models because at least one extra parameter is needed to specify the functional form of diversity dependence. 
+In fact, the choice of the functional form itself becomes arbitrary. 
+To our knowledge, the GR model is the first of its kind in modeling region-specific speciation and extinction rates for more than two regions. 
+The closest model to GR is the GeoSSE model \citep{Goldberg2011}, which in fact allows one to write equations for any number of regions, but to our knowledge an application for more than two regions has not been attempted. 
+Nor has the power of that model been properly tested, except for a few combinations of parameters. 
+
+The approach we use here provides several practical advantages compared to the other models. 
+First, SSE-models as well as many other models of phylogenetic inference (e.g. DEC) are based on evaluating a likelihood function, and they assume that all extant taxa are included in the phylogeny. 
+In reality, not all extant taxa are included in the phylogeny. 
+Some methods circumvent this problem by deriving an appropriate likelihood function. 
+For instance, in the extension of the BiSSE model, the probability of a lineage being “extinct”  and evolving into a particular state is conditioned on the probability of the lineage being sampled \citep{FitzJohn2009}. 
+The GR approach we have developed here offers an alternative solution, as our forward simulation mimics the actual radiation, and because of the kind of sampling we perform in the course of the analysis (see the algorithm: first generation, step 4, and subsequent generations, step 6, which takes into account missing taxa by removing them from the analysis). Randomly pruning trees is known to generate bias in parameter estimation, especially when the original sample was not obtained in the same manner \citep{Hohna2011}. 
+However, this issue generally arises while estimating the relative extinction rate. 
+In Scenario 3, this is not a major concern as the extinction rate is fixed for all regions. 
+Instead of random pruning, we could have implemented weighted pruning so that, for instance, widespread species have lower probability of being removed from the tree. 
+However, since the 50 species in the empirical data have also been selected randomly, random sampling is the natural and simplest choice. 
+Finally, an important advantage of the GR model is that it permits the use of information (e.g. on geographical ranges) on species that are not included in the phylogeny. 
+In the present case, though only 50 species out of the total of 73 species are included in the phylogeny, we have used data on geographical ranges for all the 73 species in the analysis. Unlike the SSE-models, which require a dated phylogeny, the GR model can be applied to non-ultrametric trees as well. 
+On the other hand, one of the weaknesses of the present application is that we may not have used maximally information about the timing of the tree. 
+The information in our fourth summary statistic, relative phylogenetic diversity, slightly improved the inference in the validation, but it did not allow us to estimate efficiently the values of both within-region speciation rate and the extinction rate simultaneously. 
+
+We used simple functional forms for the dependence of speciation and extinction rates on the current number of species in each region. 
+In the model with diversity-dependent speciation rate (\textit{Model A}), the inverse function was chosen to balance two mechanisms: large number of species lowers the per lineage speciation rate (e.g. because of competition), but also increases the pool of genetic diversity. 
+Hence, the total within-region speciation rate remains constant in each region. 
+This functional form has been previously used for time-dependent speciation rate \citep{Nee1994}. 
+In the model with diversity-dependent extinction rate (\textit{Model B}), the sigmoid form stipulates that the effect becomes rapidly stronger when a certain number of lineages has accumulated in a region. 
+In both cases, diversity-dependence added stability to the simulation results, apart from being biologically well justified.  
+Other forms of diversity dependence have been used, especially for the speciation rate, using linearly or exponentially decreasing rates \citep{Rabosky2008, Etienne2012}. 
+Considering that we had difficulties in estimating the full set of parameters, including the latter forms of diversity-dependence would introduce additional parameters to the model. 
+We leave these questions to future work.
+	 
+We expected that we would not be very successful in inferring the parameters of region-specific speciation and extinction rates simultaneously (Scenarios 1 and 2) because of parameter correlations, which turned out to be the case. 
+Using fossil data as suggested in \citet{Paradis2004} potentially increases the power of inference, but this remains a theoretical possibility for most taxa because of paucity of high-quality fossil data. 
+The BiSSE model, which is closely related to our model, reported confounding factors that limit the power of the model \citep{Davis2013}, especially when the ratio between the observed characters is highly skewed. 
+We found that poorly estimated parameters are associated with low extinction and within-region speciation rates in particular regions, which leads to skewed distribution of the number of species in each region. 
+\citet{Goldberg2011} found the highest correlation between extinction and colonization rate parameters, and the next highest between speciation and colonization rates. 
+In contrast, here the highest correlation was between region-specific within-region speciation and extinction rates (Scenarios 1 and 2). 
+Between-region speciation and the initial range, where the colonization of Madagascar originally took place, turned out to be difficult to estimate in both simulated and empirical data. \citet{Goldberg2011} similarly found that the between-region speciation rate had the broadest posterior distribution.  
+When they fixed the within-region speciation rate to a constant, the estimation of the between-region speciation rate was more successful. 
+Others have concluded that inferring geographical mode of speciation is difficult because fast range dynamics may dilute the relevant signal \citep{Losos2003}. 
+It is also possible that between-region speciation was difficult to estimate here because of paucity of information in the data, given the five regions and many ways that a large geographical range can be split into two.  
+With simulated data, the initial range was best estimated when simulation time was short and the initial range was South-West or South-East, where the current number of species is lowest. 
+In other cases, we conjecture that high rate of within-region speciation may produce convergent patterns and reduce the influence of where the process initially started. 
+Finally, we comment on the broad posterior distributions of the extinction parameters in Scenario 4 (Fig. 5). 
+Unlike Scenario 3, which estimates only parameters that lead to an increase in species diversity via speciation and colonization, Scenario 4 estimates extinction parameters.  
+We found a strong correlation between the extinction and colonization parameters, which explains the  broad posterior distributions.  
+Moreover, the power of the estimation depends on the information that the data contains. 
+In the empirical dataset, very few species occur in West, and high value of the extinction rate in that region is possible because colonization counterbalances extinction.
+   
+We found that the colonization rate from one region to another was intermediate in magnitude to within-region speciation rates in the different regions. 
+This result clearly highlights the importance of integrating the study of range dynamics with the study of speciation-extinction dynamics in evolutionary radiations across large area. 
+This result is also consistent with the current geographical distributions of the species. 
+For instance, in a clade of 24 large-bodied \textit{Nanos} species out of the 74 species studied here, \citet{Miraldo2014} found that the species have largely allopatric distributions, with different species groups occurring in different parts of Madagascar. 
+Such a pattern can arise only if the species ranges are very conservative, that is, if the region-to-region colonization rate is low in comparison with speciation rate.
+ 
+Though the simultaneous estimation of region-specific speciation and extinction rates did not produce clear-cut results because of parameter correlations, all the scenarios studied here nonetheless produced similar relationships among the modes of region-specific parameter distributions. 
+Extinction rate is clearly lower in North than in West or East, while within-region speciation rate may be slightly higher in North than elsewhere.  
+Consequently, the ratio of within-region speciation to extinction rate was very clearly highest in North, where the current species number is highest. 
+These patterns are consistent with the topographical and environmental heterogeneities in the different regions.  
+Western Madagascar has a uniform flat topography, while eastern Madagascar is dominated by the single slope of the North-South mountain chain. 
+In contrast, northern Madagascar has a distinctly more heterogeneous environment, including a wide range of different forest types and strong elevational gradients in multiple compass directions. 
+Such conditions are likely to buffer species against extinctions, even during long periods of time with changing climatic conditions, because species are likely to retain suitable habitat in some parts of the heterogeneous environment.  
+Northern Madagascar is a biodiversity hotspot also in many other taxa apart from dung beetles probably for the same reason \citep{Wilme2006, Kremen2008}.
+
+To conclude on the methodological issues, many complex models have been developed for phylogenetic comparative analyses, but they all have limitations that need to be considered before routine applications to empirical data.  
+One must also be careful not violate model assumptions. 
+For instance, if diversification rates are diversity-dependent, the present GR model is preferable to the GeoSSE model. 
+The State-Speciation-Extinction (SSE) models, like BiSSE, GeoSSE and GR, do not control for pseudo-replication and the models are thus subject to high rate of type I errors \citep{Maddison2015, Rabosky2015}. 
+A series of simulation studies showed that even neutral characters could be seemingly associated with heterogeneous diversification rates \citep{Rabosky2015}. 
+The problem is serious enough to make associations between diversification rates and trait values reported in previous studies questionable. 
+The likelihood function in the SSE models is so complicated the implementation of new assumptions is a daunting task, if even possible. 
+In this work, we propose an alternative to the classical exact likelihood approach that allows, in principle, for more realistic model assumptions.  
+
+\section*{Funding}
+This work was supported by the Academy of Finland (grant numbers 256453 and 250444 to IH).
+
+\section*{Acknowledgments}
+We thank Andreia Miraldo for discussions and Rampal S. Etienne, Emma E. Goldberg and Daniele Silvestro for comments on the manuscript. 
